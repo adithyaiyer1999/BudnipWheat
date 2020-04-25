@@ -68,6 +68,40 @@ def make_dataframe_with_bands(vector_path,raster_path):
     
     df_final['isWheat'] = values
     return df_final
+
+def split_image_into_516x516(vector_path,raster_path):
+    
+    '''
+    Input : path to vector shapefile (String)
+            path to raster image (String)
+            
+    Output : Pandas Dataframe object with n images split as represented by different columns
+    
+    '''
+    
+    raster = rasterio.open(raster_path)
+    vector = gpd.read_file(vector_path)
+    vector = vectorFilePreprocessing(vector,raster)
+    
+    out_img, out_transform = mask(raster, vector['geometry'], crop=True,filled = False)
+    
+    row_multiple = int((out_img.data.shape)[1]/516)
+    column_multiple = int((out_img.data.shape)[2]/516)
+    df = pd.DataFrame()
+    t = 0
+    for i in range(1,row_multiple+1):
+        for j in range(1,column_multiple+1):
+            l = 0
+            t = t+1
+            for band in out_img.data:
+                l = l+1
+                df['img_'+str(t)+'B'+str(l)] = band[512*(i-1):512*i,512*(j-1):512*j].flatten()
+            values =(((out_img.mask[0][512*(i-1):512*i,512*(j-1):512*j]==False)*1).flatten())
+            df['img_'+str(t)+'isWheat'] = values
+    
+    
+    return df
+                
     
     
     
