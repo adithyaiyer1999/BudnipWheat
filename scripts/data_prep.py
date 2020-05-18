@@ -69,7 +69,7 @@ def make_dataframe_with_bands(vector_path,raster_path):
     df_final['isWheat'] = values
     return df_final
 
-def split_image_into_516x516(vector_path,raster_path):
+def split_image_into_512x512(vector_path,raster_path):
     
     '''
     Input : path to vector shapefile (String)
@@ -85,8 +85,8 @@ def split_image_into_516x516(vector_path,raster_path):
     
     out_img, out_transform = mask(raster, vector['geometry'], crop=True,filled = False)
     
-    row_multiple = int((out_img.data.shape)[1]/516)
-    column_multiple = int((out_img.data.shape)[2]/516)
+    row_multiple = int((out_img.data.shape)[1]/512)
+    column_multiple = int((out_img.data.shape)[2]/512)
     df = pd.DataFrame()
     t = 0
     for i in range(1,row_multiple+1):
@@ -101,7 +101,30 @@ def split_image_into_516x516(vector_path,raster_path):
     
     
     return df
-                
+
+def trainingDataForUNET(vector_path,raster_path):
+    
+    raster = rasterio.open(raster_path)
+    vector = gpd.read_file(vector_path)
+    vector = vectorFilePreprocessing(vector,raster)
+    
+    out_img, out_transform = mask(raster, vector['geometry'], crop=True,filled = False)
+    
+    row_multiple = int((out_img.data.shape)[1]/512)
+    column_multiple = int((out_img.data.shape)[2]/512)
+    number_images = row_multiple*column_multiple
+    t = 0
+    images = np.zeros((number_images,12,512,512))
+    masks = np.zeros((number_images,512,512))
+    for i in range(1,row_multiple+1):
+        for j in range(1,column_multiple+1):
+            
+            images[t] = out_img.data[:,512*(i-1):512*i,512*(j-1):512*j]
+            masks[t] =((out_img.mask[0][512*(i-1):512*i,512*(j-1):512*j]==False)*1)
+            t = t+1
+                       
+                       
+    return images, masks
     
     
     
