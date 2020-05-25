@@ -1,0 +1,105 @@
+import numpy as np
+
+def NDVI(img):
+    arr = np.zeros((img.shape[0]+1,img.shape[1],img.shape[2]))
+    arr[0:img.shape[0]] = img
+    arr[img.shape[0]] = ((img[7]-img[3])/(img[7]+img[3]))
+    return arr
+
+def AFRI1(img):
+    arr = np.zeros((img.shape[0]+1,img.shape[1],img.shape[2]))
+    arr[0:img.shape[0]] = img
+    arr[img.shape[0]] = ((img[8]-0.66*img[11])/(img[8]+0.66*img[3]))
+    return arr
+
+def BNDVI(img):
+    arr = np.zeros((img.shape[0]+1,img.shape[1],img.shape[2]))
+    arr[0:img.shape[0]] = img
+    arr[img.shape[0]] = ((img[7]-img[1])/(img[7]+img[1]))
+    return arr
+
+
+def BRI(img):
+    arr = np.zeros((img.shape[0]+1,img.shape[1],img.shape[2]))
+    arr[0:img.shape[0]] = img
+    arr[img.shape[0]] = (1/img[2]-1/img[4])/img[5]
+    
+    return arr
+
+def BWDWVI(img):
+    arr = np.zeros((img.shape[0]+1,img.shape[1],img.shape[2]))
+    arr[0:img.shape[0]] = img
+    arr[img.shape[0]] = (0.1*img[6]-img[1])/(0.1*img[6]-img[1])
+    return arr
+
+def CCCI(img):
+    arr = np.zeros((img.shape[0]+1,img.shape[1],img.shape[2]))
+    arr[0:img.shape[0]] = img
+    arr[img.shape[0]] = ((img[7]-img[4])/(img[7]+img[4])) / ((img[7]-img[3])/(img[7]+img[3]))  
+    return arr
+
+
+def CVI(img):
+    arr = np.zeros((img.shape[0]+1,img.shape[1],img.shape[2]))
+    arr[0:img.shape[0]] = img
+    arr[img.shape[0]] = ((img[7]*img[3])/(img[2]*img[2]))
+    return arr
+
+def DATT1(img):
+    arr = np.zeros((img.shape[0]+1,img.shape[1],img.shape[2]))
+    arr[0:img.shape[0]] = img
+    arr[img.shape[0]] = ((img[7]-img[4])/(img[7]+img[3]))
+    return arr
+
+def DVI(img):
+    arr = np.zeros((img.shape[0]+1,img.shape[1],img.shape[2]))
+    arr[0:img.shape[0]] = img
+    arr[img.shape[0]] = 2.4*img[7]-img[3]
+    return arr
+
+def EVI(img):
+    arr = np.zeros((img.shape[0]+1,img.shape[1],img.shape[2]))
+    arr[0:img.shape[0]] = img
+    arr[img.shape[0]] = 2.5*((img[7]-img[3])/(img[7]+6*img[3]-7.5*img[1]+1))
+    return arr
+
+def GARI(img):
+    arr = np.zeros((img.shape[0]+1,img.shape[1],img.shape[2]))
+    arr[0:img.shape[0]] = img
+    arr[img.shape[0]] = ((img[7]-img[2]+img[1]-img[3])/(img[7]-img[2]-img[1]+img[3]))
+    return arr
+
+def GNDVI(img):
+    arr = np.zeros((img.shape[0]+1,img.shape[1],img.shape[2]))
+    arr[0:img.shape[0]] = img
+    arr[img.shape[0]] = ((img[7]-img[2])/(img[7]+img[2]))
+    return arr
+
+def GLI(img):
+    arr = np.zeros((img.shape[0]+1,img.shape[1],img.shape[2]))
+    arr[0:img.shape[0]] = img
+    arr[img.shape[0]] = (2*img[2]-img[4]-img[1])/(2*img[2]+img[4]+img[1])
+    return arr
+
+def GNDVI2(img):
+    arr = np.zeros((img.shape[0]+1,img.shape[1],img.shape[2]))
+    arr[0:img.shape[0]] = img
+    arr[img.shape[0]] = ((img[6]-img[2])/(img[6]+img[2]))
+    return arr
+
+def GRNDVI(img):
+    arr = np.zeros((img.shape[0]+1,img.shape[1],img.shape[2]))
+    arr[0:img.shape[0]] = img
+    arr[img.shape[0]] = ((img[7]-img[2]+img[4])/(img[7]+img[2]-img[4]))
+    return arr
+
+
+
+
+
+
+
+
+
+
+
